@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 
 from .models import Ticket, Content
@@ -13,4 +13,8 @@ def index(request):
 
 
 def detail(request, ticket_id):
-    return HttpResponse("You're looking at the detail of %s." % ticket_id)
+    ticket = get_object_or_404(Ticket, ticket_id=ticket_id)
+    context = {
+        'ticket': ticket
+    }
+    return render(request, 'todo_list/detail.html', context)
